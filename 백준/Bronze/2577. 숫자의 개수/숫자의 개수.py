@@ -1,0 +1,16 @@
+A = int(input())
+B = int(input())
+C = int(input())
+
+muti = list(map(int, str(A*B*C)))
+
+print(muti.count(0))
+print(muti.count(1))
+print(muti.count(2))
+print(muti.count(3))
+print(muti.count(4))
+print(muti.count(5))
+print(muti.count(6))
+print(muti.count(7))
+print(muti.count(8))
+print(muti.count(9))
