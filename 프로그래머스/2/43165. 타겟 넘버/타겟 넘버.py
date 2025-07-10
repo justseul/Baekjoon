@@ -7,7 +7,5 @@ def solution(numbers, target):
             tmp.append(parent + num)
             tmp.append(parent - num)
         leaves = tmp
-    for leaf in leaves:
-        if leaf == target:
-            answer += 1
-    return answer
+
+    return leaves.count(target)
