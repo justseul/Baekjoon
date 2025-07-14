@@ -1,22 +1,23 @@
-n, m = map(int,input().split())
+import sys
 
-rs = []
-chk = [False] * (n+1)
+input = sys.stdin. readline
 
-def rec(num):
-    if num == m:
+n, m = map(int, input().split())
+check = [False] * (n+1)
+rs = list()
+def BP(x):
+    if x == m:
         print(' '.join(map(str, rs)))
-        return 
-    for i in range(1, n+1):
-        if chk[i] == False:
-            chk[i] = True
+        return
+
+
+    for i in range(1,n+1):
+        if check[i] == False:
+            check[i] = True
             rs.append(i)
-            rec(num+1)
-            chk[i] = False
+            BP(x+1)
+            check[i] = False
             rs.pop()
-            
-rec(0)
-        
-        
-        
-    
+
+
+BP(0)
