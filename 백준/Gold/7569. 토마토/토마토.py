@@ -1,41 +1,37 @@
 import sys
 from collections import deque
 input = sys.stdin.readline
-
 m, n, h = map(int, input().split())
-
-factory = [ [list(map(int, input().split())) for _ in range(n)] for _ in range(h) ]
-
-dx = [-1, 1, 0, 0, 0, 0]
-dy = [0, 0, -1, 1, 0, 0]
-dz = [0, 0, 0, 0, 1, -1]
+fact = [[list(map(int, input().split())) for _ in range(n)] for _ in range(h)]
 
 q = deque()
+for i in range(h):
+    for j in range(n):
+        for k in range(m):
+            if fact[i][j][k] == 1:
+                q.append((i,j,k))
 
-for z in range(h):
-    for x in range(n):
-        for y in range(m):
-            if factory[z][x][y] == 1:
-                q.append((z, x, y))
+dx = [1,-1,0,0,0,0]
+dy = [0,0,1,-1,0,0]
+dz = [0,0,0,0,1,-1]
 
 while q:
-    z, x, y = q.popleft()
+    ez, ey, ex = q.popleft()
     for i in range(6):
-        nz, nx, ny = z + dz[i], x + dx[i], y + dy[i]
-        if 0 <= nz < h and 0 <= nx < n and 0 <= ny < m:
-            if factory[nz][nx][ny] == 0:  
-                factory[nz][nx][ny] = factory[z][x][y] + 1
-                q.append((nz, nx, ny))
+        nz = ez + dz[i]
+        ny = ey + dy[i]
+        nx = ex + dx[i]
+        if 0 <= nz < h and 0 <= ny < n and 0 <= nx < m and fact[nz][ny][nx] == 0:
+            fact[nz][ny][nx] = fact[ez][ey][ex] + 1
+            q.append((nz,ny,nx))
+def solve():
+    day = 1
+    for i in range(h):
+        for j in range(n):
+            for k in range(m):
+                if fact[i][j][k] == 0:
+                    return -1
+                day = max(day, fact[i][j][k] )
+    return day-1
 
-ans = 0
-impossible = False 
-for z in range(h):
-    for x in range(n):
-        for y in range(m):
-            if factory[z][x][y] == 0:  
-                impossible = True
-            ans = max(ans, factory[z][x][y])
-if impossible:
-    print(-1)
-else:
-    print(ans - 1)
+print(solve())
